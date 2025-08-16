@@ -4,7 +4,6 @@ import PageMeta from '../../components/common/PageMeta';
 import ComponentCard from '../../components/common/ComponentCard.tsx';
 import Label from '../../components/form/Label.tsx';
 import Input from '../../components/form/input/InputField.tsx';
-import DatePicker from '../../components/form/date-picker.tsx';
 import Button from '../../components/ui/button/Button';
 
 type RoEntry = {
@@ -162,11 +161,11 @@ export default function FormRo() {
   return (
     <div className="space-y-5 sm:space-y-6">
       <PageMeta title="Form RO" description="Form RO" />
-      <PageBreadcrumb pageTitle="Form RO" />
+      <PageBreadcrumb pageTitle="Form Penjualan Product" />
 
-      <div className="grid grid-cols-1 gap-8 xl:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
         <div className="space-y-6">
-          <ComponentCard title="Form RO">
+          <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white px-5 p-8 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6 sm:pt-6">
             <div>
               <Label htmlFor="kodeToko">Kode Toko</Label>
               <select
@@ -212,11 +211,11 @@ export default function FormRo() {
                 <Input type="text" id="salesOrder" value={salesOrder} onChange={(e: any) => setSalesOrder(e.target.value)} />
               </div>
             </div>
-          </ComponentCard>
+          </div>
         </div>
 
         <div className="space-y-6">
-          <ComponentCard title="Product">
+          <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white px-5 p-8 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6 sm:pt-6">
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <Label htmlFor="p1">P1</Label>
@@ -239,16 +238,16 @@ export default function FormRo() {
                 <Input type="number" id="p5" value={p5 as any} onChange={(e: any) => setP5(e.target.value === '' ? 0 : Number(e.target.value))} />
               </div>
             </div>
-            <div className="mt-4">
+            {/* <div className="mt-4">
               <Label>Total</Label>
               <div className="text-lg font-semibold">{total}</div>
-            </div>
+            </div> */}
             <div className="mt-6 flex justify-end">
               <Button size="md" variant="primary" onClick={handleSubmit}>
                 Kirim
               </Button>
             </div>
-          </ComponentCard>
+          </div>
         </div>
       </div>
     </div>

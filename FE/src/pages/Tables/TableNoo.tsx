@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import PageBreadcrumb from '../../components/common/PageBreadCrumb';
-import ComponentCard from '../../components/common/ComponentCard';
+import { useEffect, useState } from 'react';
 import PageMeta from '../../components/common/PageMeta';
 import { Table, TableBody, TableCell, TableHeader, TableRow } from '../../components/ui/table';
 // Badge not used here
@@ -9,6 +7,9 @@ import { useModal } from '../../hooks/useModal';
 import Button from '../../components/ui/button/Button';
 import Input from '../../components/form/input/InputField';
 import DatePicker from '../../components/form/date-picker';
+import { Dropdown } from '../../components/ui/dropdown/Dropdown';
+import { DropdownItem } from '../../components/ui/dropdown/DropdownItem';
+import { MoreDotIcon } from '../../icons';
 
 type NooEntry = {
   tanggal?: string;
@@ -151,6 +152,16 @@ export default function TableNoo() {
       window.removeEventListener('storage', handleStorage);
     };
   }, []);
+
+  const [isOpenToggle, setIsOpen] = useState(false);
+
+  function toggleDropdown() {
+    setIsOpen(!isOpenToggle);
+  }
+
+  function closeDropdown() {
+    setIsOpen(false);
+  }
 
   // modal state
   const { isOpen, openModal, closeModal } = useModal(false);
@@ -336,9 +347,55 @@ export default function TableNoo() {
   return (
     <>
       <PageMeta title="React.js Basic Tables Dashboard | TailAdmin - Next.js Admin Dashboard Template" description="This is React.js Basic Tables Dashboard page for TailAdmin - React.js Tailwind CSS Admin Dashboard Template" />
-      <ComponentCard title="Table PO">
-        {/* toolbar: Add Event + and Pengiriman */}
-        <div className="px-6 pb-4 flex gap-2">
+      <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white px-5 p-8 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6 sm:pt-6">
+        <div className="flex items-center justify-between pb-4">
+          <h3 className="text-lg font-semibold text-gray-800 dark:text-white/90">Tabel Penjualan (PO)</h3>
+          <div className="relative inline-block">
+            <button aria-label="More actions" className="dropdown-toggle" onClick={toggleDropdown}>
+              <MoreDotIcon className="text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 size-6" />
+            </button>
+            <Dropdown isOpen={isOpenToggle} onClose={closeDropdown} className="w-40 p-2">
+              <DropdownItem
+                onClick={() => {
+                  setShipType('freezer');
+                  openShipModal();
+                }}
+                className="flex w-full font-normal text-left text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
+              >
+                Pengiriman Freezer
+              </DropdownItem>
+              <DropdownItem
+                onClick={() => {
+                  setTerType('freezer');
+                  openTerkirimModal();
+                }}
+                className="flex w-full font-normal text-left text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
+              >
+                Freezer Terkirim
+              </DropdownItem>
+              <DropdownItem
+                onClick={() => {
+                  setShipType('icecream');
+                  openShipModal();
+                }}
+                className="flex w-full font-normal text-left text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
+              >
+                Pengiriman Ice Cream
+              </DropdownItem>
+              <DropdownItem
+                onClick={() => {
+                  setTerType('icecream');
+                  openTerkirimModal();
+                }}
+                className="flex w-full font-normal text-left text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
+              >
+                Ice Cream Terkirim
+              </DropdownItem>
+            </Dropdown>
+          </div>
+        </div>
+
+        {/* <div className="px-6 pb-4 flex gap-2">
           <Button
             size="sm"
             variant="primary"
@@ -379,7 +436,7 @@ export default function TableNoo() {
           >
             Ice Cream Terkirim
           </Button>
-        </div>
+        </div> */}
         <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
           <div className="max-w-full overflow-x-auto">
             <Table>
@@ -534,7 +591,7 @@ export default function TableNoo() {
             </Table>
           </div>
         </div>
-      </ComponentCard>
+      </div>
       {/* Pengiriman modal */}
       <Modal isOpen={isShipOpen} onClose={closeShipModal} className="max-w-[500px] m-4">
         <div className="p-4">

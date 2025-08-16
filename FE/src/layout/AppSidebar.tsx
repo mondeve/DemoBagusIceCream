@@ -38,19 +38,19 @@ const navItems: NavItem[] = [
     name: 'Forms',
     icon: <ListIcon />,
     subItems: [
-      { name: 'Form Elements', path: '/form-elements', pro: false },
-      { name: 'Form NOO', path: '/form-noo', pro: false },
-      { name: 'Form RO', path: '/form-ro', pro: false },
+      // { name: 'Form Elements', path: '/form-elements', pro: false },
+      { name: 'Form Penjualan (PO)', path: '/form-noo', pro: false },
+      { name: 'Form Penjualan Product', path: '/form-ro', pro: false },
     ],
   },
   {
     name: 'Tables',
     icon: <TableIcon />,
     subItems: [
-      { name: 'Basic Tables', path: '/basic-tables', pro: false },
-      { name: 'Freezer', path: '/freezer', pro: false },
-      { name: 'Table NOO', path: '/table-noo', pro: false },
-      { name: 'Table RO', path: '/table-ro', pro: false },
+      // { name: 'Basic Tables', path: '/basic-tables', pro: false },
+      // { name: 'Freezer', path: '/freezer', pro: false },
+      { name: 'Table Penjualan (PO)', path: '/table-noo', pro: false },
+      { name: 'Table Penjualan Product', path: '/table-ro', pro: false },
     ],
   },
   // {

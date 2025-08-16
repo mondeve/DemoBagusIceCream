@@ -6,7 +6,6 @@ import Label from '../../components/form/Label.tsx';
 import Input from '../../components/form/input/InputField.tsx';
 import FileInput from '../../components/form/input/FileInput';
 import Button from '../../components/ui/button/Button';
-import DatePicker from '../../components/form/date-picker.tsx';
 import Select from '../../components/form/Select';
 
 export default function FormNoo() {
@@ -135,14 +134,14 @@ export default function FormNoo() {
   return (
     <div>
       <PageMeta title="React.js Form Elements Dashboard | TailAdmin - React.js Admin Dashboard Template" description="This is React.js Form Elements Dashboard page for TailAdmin - React.js Tailwind CSS Admin Dashboard Template" />
-      <PageBreadcrumb pageTitle="Form NOO" />
+      <PageBreadcrumb pageTitle="Form Penjualan (PO)" />
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
         {/* Kolom Kiri */}
         <div className="space-y-6">
           {/* <InputFormNoo /> */}
 
-          <ComponentCard title="Form 1">
+          <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white px-5 p-8 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6 sm:pt-6">
             <div>
               <Label htmlFor="namaSales">Nama Lengkap Sales</Label>
               <Input type="text" id="namaSales" value={namaSales} onChange={(e: any) => setNamaSales(e.target.value)} />
@@ -177,12 +176,12 @@ export default function FormNoo() {
               {ktpFileName ? <div className="mt-1 text-theme-xs text-gray-500">{ktpFileName}</div> : null}
             </div>
             {/* </div> */}
-          </ComponentCard>
+          </div>
         </div>
 
         {/* Kolom Kanan */}
         <div className="space-y-6">
-          <ComponentCard title="Form 2">
+          <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white px-5 p-8 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6 sm:pt-6">
             <div>
               <Label htmlFor="alamatToko">Alamat Toko</Label>
               <Input type="text" id="alamatToko" value={alamatToko} onChange={(e: any) => setAlamatToko(e.target.value)} />
@@ -208,7 +207,7 @@ export default function FormNoo() {
               <FileInput ref={outletInputRef} onChange={handleOutletFileChange} className="custom-class" ariaLabel="Upload Outlet" />
               {outletFileName ? <div className="mt-1 text-theme-xs text-gray-500">{outletFileName}</div> : null}
             </div>
-          </ComponentCard>
+          </div>
           <div>
             <Button size="md" variant="primary" onClick={handleSubmit}>
               Kirim
