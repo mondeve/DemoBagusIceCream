@@ -650,7 +650,7 @@ export default function TableNoo() {
         </div>
       </Modal>
       {/* Detail modal */}
-      <Modal isOpen={isOpen} onClose={closeModal} className="max-w-[900px] m-4">
+      <Modal isOpen={isOpen} onClose={closeModal} className="max-w-[500px] m-4">
         <div className="p-6 max-h-[70vh] overflow-auto">
           <h3 className="text-lg font-semibold mb-2">Detail</h3>
           {editingEntry && (
@@ -665,84 +665,71 @@ export default function TableNoo() {
           )}
           {editingEntry ? (
             <div className="grid grid-cols-1 gap-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-theme-xs block mb-1">Nama Lengkap Sales</label>
-                  <Input value={editingEntry.namaSales || ''} onChange={(e: any) => handleFieldChange('namaSales', e.target.value)} />
-                </div>
-                <div>
-                  <label className="text-theme-xs block mb-1">ID Sales</label>
-                  <Input value={editingEntry.idSales || ''} onChange={(e: any) => handleFieldChange('idSales', e.target.value)} />
-                </div>
+              <div>
+                <label className="text-theme-xs block mb-1">Nama Lengkap Sales</label>
+                <Input value={editingEntry.namaSales || ''} onChange={(e: any) => handleFieldChange('namaSales', e.target.value)} />
               </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-theme-xs block mb-1">Nama Toko</label>
-                  <Input value={editingEntry.namaToko || ''} onChange={(e: any) => handleFieldChange('namaToko', e.target.value)} />
-                </div>
-                <div>
-                  <label className="text-theme-xs block mb-1">Kontak Toko</label>
-                  <Input value={editingEntry.kontakToko || ''} onChange={(e: any) => handleFieldChange('kontakToko', e.target.value)} />
-                </div>
+              <div>
+                <label className="text-theme-xs block mb-1">ID Sales</label>
+                <Input value={editingEntry.idSales || ''} onChange={(e: any) => handleFieldChange('idSales', e.target.value)} />
+              </div>
+              <div>
+                <label className="text-theme-xs block mb-1">Nama Toko</label>
+                <Input value={editingEntry.namaToko || ''} onChange={(e: any) => handleFieldChange('namaToko', e.target.value)} />
+              </div>
+              <div>
+                <label className="text-theme-xs block mb-1">Kontak Toko</label>
+                <Input value={editingEntry.kontakToko || ''} onChange={(e: any) => handleFieldChange('kontakToko', e.target.value)} />
               </div>
 
               <div>
                 <label className="text-theme-xs block mb-1">Nama Pemilik</label>
                 <Input value={editingEntry.namaPemilik || ''} onChange={(e: any) => handleFieldChange('namaPemilik', e.target.value)} />
               </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-theme-xs block mb-1">Alamat Toko</label>
-                  <Input value={editingEntry.alamatToko || ''} onChange={(e: any) => handleFieldChange('alamatToko', e.target.value)} />
-                </div>
-                <div>
-                  <label className="text-theme-xs block mb-1">Koordinat</label>
-                  <Input value={editingEntry.koordinat || ''} onChange={(e: any) => handleFieldChange('koordinat', e.target.value)} />
-                </div>
+              <div>
+                <label className="text-theme-xs block mb-1">Alamat Toko</label>
+                <Input value={editingEntry.alamatToko || ''} onChange={(e: any) => handleFieldChange('alamatToko', e.target.value)} />
+              </div>
+              <div>
+                <label className="text-theme-xs block mb-1">Koordinat</label>
+                <Input value={editingEntry.koordinat || ''} onChange={(e: any) => handleFieldChange('koordinat', e.target.value)} />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-theme-xs block mb-1">Kecamatan</label>
-                  <Input value={editingEntry.kecamatan || ''} onChange={(e: any) => handleFieldChange('kecamatan', e.target.value)} />
-                </div>
-                <div>
-                  <label className="text-theme-xs block mb-1">Desa</label>
-                  <Input value={editingEntry.desa || ''} onChange={(e: any) => handleFieldChange('desa', e.target.value)} />
-                </div>
+              <div>
+                <label className="text-theme-xs block mb-1">Kecamatan</label>
+                <Input value={editingEntry.kecamatan || ''} onChange={(e: any) => handleFieldChange('kecamatan', e.target.value)} />
+              </div>
+              <div>
+                <label className="text-theme-xs block mb-1">Desa</label>
+                <Input value={editingEntry.desa || ''} onChange={(e: any) => handleFieldChange('desa', e.target.value)} />
               </div>
 
+              <div>
+                <label className="text-theme-xs block mb-1">NIK KTP</label>
+                <Input value={editingEntry.nikKtp || ''} onChange={(e: any) => handleFieldChange('nikKtp', e.target.value)} />
+              </div>
               <div className="grid grid-cols-2 gap-4 items-start">
-                <div>
-                  <label className="text-theme-xs block mb-1">NIK KTP</label>
-                  <Input value={editingEntry.nikKtp || ''} onChange={(e: any) => handleFieldChange('nikKtp', e.target.value)} />
-                </div>
                 <div>
                   <label className="text-theme-xs block mb-1">KTP (preview)</label>
                   {editingEntry.ktpDataUrl ? <img src={editingEntry.ktpDataUrl} alt="ktp" className="max-h-40 object-contain rounded-md" /> : <div className="text-theme-xs text-gray-500">{editingEntry.ktpFileName || 'Tidak ada file'}</div>}
                 </div>
+                <div>
+                  <label className="text-theme-xs block mb-1">Outlet (preview)</label>
+                  {editingEntry.outletDataUrl ? (
+                    <img src={editingEntry.outletDataUrl} alt="outlet" className="max-h-48 object-contain rounded-md" />
+                  ) : (
+                    <div className="text-theme-xs text-gray-500">{editingEntry.outletFileName || 'Tidak ada file'}</div>
+                  )}
+                </div>
               </div>
 
               <div>
-                <label className="text-theme-xs block mb-1">Outlet (preview)</label>
-                {editingEntry.outletDataUrl ? (
-                  <img src={editingEntry.outletDataUrl} alt="outlet" className="max-h-48 object-contain rounded-md" />
-                ) : (
-                  <div className="text-theme-xs text-gray-500">{editingEntry.outletFileName || 'Tidak ada file'}</div>
-                )}
+                <label className="text-theme-xs block mb-1">Daya Listrik</label>
+                <Input value={editingEntry.dayaListrik || ''} onChange={(e: any) => handleFieldChange('dayaListrik', e.target.value)} />
               </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-theme-xs block mb-1">Daya Listrik</label>
-                  <Input value={editingEntry.dayaListrik || ''} onChange={(e: any) => handleFieldChange('dayaListrik', e.target.value)} />
-                </div>
-                <div>
-                  <label className="text-theme-xs block mb-1">Tanggal Input</label>
-                  <Input value={editingEntry.tanggal || ''} onChange={(e: any) => handleFieldChange('tanggal', e.target.value)} />
-                </div>
+              <div>
+                <label className="text-theme-xs block mb-1">Tanggal Input</label>
+                <Input value={editingEntry.tanggal || ''} onChange={(e: any) => handleFieldChange('tanggal', e.target.value)} />
               </div>
 
               <hr className="my-3" />
@@ -764,8 +751,8 @@ export default function TableNoo() {
                   <Input value={editingEntry.noPemadam || ''} onChange={(e: any) => handleFieldChange('noPemadam', e.target.value)} />
                 </div>
                 <div>
-                  <label className="text-theme-xs block mb-1">Status Freezer</label>
-                  <Input value={editingEntry.statusFreezer || ''} onChange={(e: any) => handleFieldChange('statusFreezer', e.target.value)} />
+                  <label className="text-theme-xs block mb-1">Driver Freezer</label>
+                  <Input value={editingEntry.driverFreezer || ''} onChange={(e: any) => handleFieldChange('driverFreezer', e.target.value)} />
                 </div>
               </div>
 
@@ -775,8 +762,8 @@ export default function TableNoo() {
                   <Input value={editingEntry.tanggalFreezer || ''} onChange={(e: any) => handleFieldChange('tanggalFreezer', e.target.value)} />
                 </div>
                 <div>
-                  <label className="text-theme-xs block mb-1">Driver Freezer</label>
-                  <Input value={editingEntry.driverFreezer || ''} onChange={(e: any) => handleFieldChange('driverFreezer', e.target.value)} />
+                  <label className="text-theme-xs block mb-1">Status Freezer</label>
+                  <Input value={editingEntry.statusFreezer || ''} onChange={(e: any) => handleFieldChange('statusFreezer', e.target.value)} />
                 </div>
               </div>
 
@@ -802,9 +789,11 @@ export default function TableNoo() {
                   <Input value={editingEntry.p4 || ''} onChange={(e: any) => handleFieldChange('p4', e.target.value)} />
                 </div>
               </div>
-              <div>
-                <label className="text-theme-xs block mb-1">P5</label>
-                <Input value={editingEntry.p5 || ''} onChange={(e: any) => handleFieldChange('p5', e.target.value)} />
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-theme-xs block mb-1">P5</label>
+                  <Input value={editingEntry.p5 || ''} onChange={(e: any) => handleFieldChange('p5', e.target.value)} />
+                </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
@@ -817,9 +806,11 @@ export default function TableNoo() {
                   <Input value={editingEntry.tanggalIceCream || ''} onChange={(e: any) => handleFieldChange('tanggalIceCream', e.target.value)} />
                 </div>
               </div>
-              <div>
-                <label className="text-theme-xs block mb-1">Driver Ice Cream</label>
-                <Input value={editingEntry.driverIceCream || ''} onChange={(e: any) => handleFieldChange('driverIceCream', e.target.value)} />
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-theme-xs block mb-1">Driver Ice Cream</label>
+                  <Input value={editingEntry.driverIceCream || ''} onChange={(e: any) => handleFieldChange('driverIceCream', e.target.value)} />
+                </div>
               </div>
 
               <div className="flex gap-3 justify-end mt-4">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PageBreadcrumb from '../../components/common/PageBreadCrumb';
 import PageMeta from '../../components/common/PageMeta';
 import ComponentCard from '../../components/common/ComponentCard.tsx';
@@ -6,88 +6,140 @@ import Label from '../../components/form/Label.tsx';
 import Input from '../../components/form/input/InputField.tsx';
 import DatePicker from '../../components/form/date-picker.tsx';
 import Button from '../../components/ui/button/Button';
-import Halochoco from '../../../public/images/product/halochoco.png';
-import Chococone from '../../../public/images/product/23chococone.png';
-import JoycapCokelat from '../../../public/images/product/jaycapcokelat.png';
-import FantasyAlmond from '../../../public/images/product/fantasyalmond.png';
-import FantasyCaramelMalt from '../../../public/images/product/fantasycaramelmalt.png';
 
 type RoEntry = {
-  namaMD?: string;
-  kodeToko?: string;
-  idFreezer?: string;
-  namaOutlet?: string;
-  noHpOutlet?: string;
-  alamatLengkapOutlet?: string;
-  kecamatanOutlet?: string;
+  kodeToko: string;
+  nomorNota?: string;
+  namaToko?: string;
+  alamatToko?: string;
   titikMaps?: string;
-  halococo?: number;
-  joycupCokelat?: number;
-  chocoChone?: number;
-  fantasyAlmond?: number;
-  fantasyCaramelMalt?: number;
-  tanggalPengiriman?: string;
-  keterangan?: string;
+  salesOrder?: string;
+  tanggalOrder?: string;
+  p1?: number;
+  p2?: number;
+  p3?: number;
+  p4?: number;
+  p5?: number;
+  total?: number;
+  tanggalPengiriman?: string; // empty initially
+  driver?: string; // empty initially
+  status?: string; // default 'belum terkirim'
   createdAt?: string;
 };
 
 export default function FormRo() {
-  // form state
-  const [namaMD, setNamaMD] = useState('');
-  const [kodeToko, setKodeToko] = useState('');
-  const [idFreezer, setIdFreezer] = useState('');
-  const [namaOutlet, setNamaOutlet] = useState('');
-  const [noHpOutlet, setNoHpOutlet] = useState('');
-  const [tanggalPengiriman, setTanggalPengiriman] = useState('');
-  const [keterangan, setKeterangan] = useState('');
-  const [alamatLengkapOutlet, setAlamatLengkapOutlet] = useState('');
-  const [kecamatanOutlet, setKecamatanOutlet] = useState('');
-  const [titikMaps, setTitikMaps] = useState('');
+  const [nooEntries, setNooEntries] = useState<any[]>([]);
 
-  // products
-  const [halococo, setHalococo] = useState<number | ''>('');
-  const [joycupCokelat, setJoycupCokelat] = useState<number | ''>('');
-  const [chocoChone, setChocoChone] = useState<number | ''>('');
-  const [fantasyAlmondQty, setFantasyAlmondQty] = useState<number | ''>('');
-  const [fantasyCaramelMaltQty, setFantasyCaramelMaltQty] = useState<number | ''>('');
+  // form state
+  const [kodeToko, setKodeToko] = useState('');
+  const [nomorNota, setNomorNota] = useState('');
+  const [namaToko, setNamaToko] = useState('');
+  const [alamatToko, setAlamatToko] = useState('');
+  const [titikMaps, setTitikMaps] = useState('');
+  const [salesOrder, setSalesOrder] = useState('');
+  const [tanggalOrder, setTanggalOrder] = useState(() => new Date().toISOString().slice(0, 10));
+
+  const [p1, setP1] = useState<number | ''>(0);
+  const [p2, setP2] = useState<number | ''>(0);
+  const [p3, setP3] = useState<number | ''>(0);
+  const [p4, setP4] = useState<number | ''>(0);
+  const [p5, setP5] = useState<number | ''>(0);
+
+  useEffect(() => {
+    const loadNoo = () => {
+      try {
+        const raw = localStorage.getItem('noo_entries') || '[]';
+        const parsed = JSON.parse(raw) as any[];
+        setNooEntries(Array.isArray(parsed) ? parsed : []);
+      } catch (err) {
+        setNooEntries([]);
+      }
+    };
+    loadNoo();
+    const onUpdate = () => loadNoo();
+    window.addEventListener('noo_entries_updated', onUpdate);
+    const handleStorage = (ev: StorageEvent) => {
+      if (ev.key === 'noo_entries') loadNoo();
+    };
+    window.addEventListener('storage', handleStorage);
+    return () => {
+      window.removeEventListener('noo_entries_updated', onUpdate);
+      window.removeEventListener('storage', handleStorage);
+    };
+  }, []);
+
+  // keep form fields in sync if kodeToko or nooEntries change
+  useEffect(() => {
+    if (!kodeToko) {
+      setNamaToko('');
+      setAlamatToko('');
+      setTitikMaps('');
+      // generate a fallback nomorNota when no kode selected
+      setNomorNota(`RO-${String(Date.now()).slice(-6)}`);
+      // set tanggal order to today when kode kosong
+      setTanggalOrder(new Date().toISOString().slice(0, 10));
+      return;
+    }
+    const found = nooEntries.find((n) => n && n.kodeToko === kodeToko);
+    if (found) {
+      setNamaToko(found.namaToko || found.namaOutlet || '');
+      setAlamatToko(found.alamatToko || found.alamatLengkapOutlet || found.alamat || '');
+      setTitikMaps(found.koordinat || found.latitude || found.lonlat || '');
+      // generate nomorNota using kodeToko + short timestamp to make it readable and unique
+      setNomorNota(`${kodeToko}-${String(Date.now()).slice(-6)}`);
+      // ensure tanggal order reflects today when selecting kodeToko
+      setTanggalOrder(new Date().toISOString().slice(0, 10));
+    } else {
+      setNamaToko('');
+      setAlamatToko('');
+      setTitikMaps('');
+      setNomorNota(`RO-${String(Date.now()).slice(-6)}`);
+      setTanggalOrder(new Date().toISOString().slice(0, 10));
+    }
+  }, [kodeToko, nooEntries]);
 
   const resetForm = () => {
-    setNamaMD('');
     setKodeToko('');
-    setIdFreezer('');
-    setNamaOutlet('');
-    setNoHpOutlet('');
-    setTanggalPengiriman('');
-    setKeterangan('');
-    setAlamatLengkapOutlet('');
-    setKecamatanOutlet('');
+    setNomorNota('');
+    setNamaToko('');
+    setAlamatToko('');
     setTitikMaps('');
-    setHalococo('');
-    setJoycupCokelat('');
-    setChocoChone('');
-    setFantasyAlmondQty('');
-    setFantasyCaramelMaltQty('');
+    setSalesOrder('');
+    setTanggalOrder(new Date().toISOString().slice(0, 10));
+    setP1(0);
+    setP2(0);
+    setP3(0);
+    setP4(0);
+    setP5(0);
   };
+
+  const total = [p1 || 0, p2 || 0, p3 || 0, p4 || 0, p5 || 0].reduce((s, v) => s + Number(v), 0);
 
   const handleSubmit = (e?: React.MouseEvent) => {
     if (e && typeof e.preventDefault === 'function') e.preventDefault();
+    if (!kodeToko) {
+      // eslint-disable-next-line no-alert
+      alert('Pilih kodeToko dari daftar NOO terlebih dahulu');
+      return;
+    }
 
     const entry: RoEntry = {
-      namaMD,
       kodeToko,
-      idFreezer,
-      namaOutlet,
-      noHpOutlet,
-      alamatLengkapOutlet,
-      kecamatanOutlet,
+      nomorNota,
+      namaToko,
+      alamatToko,
       titikMaps,
-      halococo: typeof halococo === 'number' ? halococo : undefined,
-      joycupCokelat: typeof joycupCokelat === 'number' ? joycupCokelat : undefined,
-      chocoChone: typeof chocoChone === 'number' ? chocoChone : undefined,
-      fantasyAlmond: typeof fantasyAlmondQty === 'number' ? fantasyAlmondQty : undefined,
-      fantasyCaramelMalt: typeof fantasyCaramelMaltQty === 'number' ? fantasyCaramelMaltQty : undefined,
-      tanggalPengiriman,
-      keterangan,
+      salesOrder,
+      tanggalOrder,
+      p1: typeof p1 === 'number' ? p1 : undefined,
+      p2: typeof p2 === 'number' ? p2 : undefined,
+      p3: typeof p3 === 'number' ? p3 : undefined,
+      p4: typeof p4 === 'number' ? p4 : undefined,
+      p5: typeof p5 === 'number' ? p5 : undefined,
+      total,
+      tanggalPengiriman: '',
+      driver: '',
+      status: 'belum terkirim',
       createdAt: new Date().toISOString(),
     };
 
@@ -95,7 +147,6 @@ export default function FormRo() {
       const existing = JSON.parse(localStorage.getItem('ro_entries') || '[]');
       existing.push(entry);
       localStorage.setItem('ro_entries', JSON.stringify(existing));
-      // notify TableRo
       try {
         window.dispatchEvent(new Event('ro_entries_updated'));
       } catch (_) {}
@@ -110,133 +161,94 @@ export default function FormRo() {
 
   return (
     <div className="space-y-5 sm:space-y-6">
-      <PageMeta title="React.js Form Elements Dashboard | TailAdmin - React.js Admin Dashboard Template" description="This is React.js Form Elements Dashboard page for TailAdmin - React.js Tailwind CSS Admin Dashboard Template" />
+      <PageMeta title="Form RO" description="Form RO" />
       <PageBreadcrumb pageTitle="Form RO" />
 
       <div className="grid grid-cols-1 gap-8 xl:grid-cols-2">
-        {/* Kolom Kiri */}
         <div className="space-y-6">
-          <ComponentCard title="Form 1">
-            <div>
-              <Label htmlFor="namaSales">Nama MD</Label>
-              <Input type="text" id="namaSales" value={namaMD} onChange={(e: any) => setNamaMD(e.target.value)} />
-            </div>
+          <ComponentCard title="Form RO">
             <div>
               <Label htmlFor="kodeToko">Kode Toko</Label>
-              <Input type="text" id="kodeToko" value={kodeToko} onChange={(e: any) => setKodeToko(e.target.value)} />
-            </div>
-            <div>
-              <Label htmlFor="idFrezeer">ID Freezer</Label>
-              <Input type="text" id="idFrezeer" value={idFreezer} onChange={(e: any) => setIdFreezer(e.target.value)} />
-            </div>
-            <div>
-              <Label htmlFor="nnamaOutlet">Nama Outlet</Label>
-              <Input type="text" id="namaOutlet" value={namaOutlet} onChange={(e: any) => setNamaOutlet(e.target.value)} />
-            </div>
-            <div>
-              <Label htmlFor="noHpOutlet">No HP Outlet</Label>
-              <Input type="text" id="noHpOutlet" value={noHpOutlet} onChange={(e: any) => setNoHpOutlet(e.target.value)} />
-            </div>
-            <div>
-              <DatePicker
-                id="date-picker"
-                label="Tanggal Kirim Freezer"
-                placeholder="Select a date"
-                onChange={(_dates, currentDateString) => {
-                  setTanggalPengiriman(currentDateString || '');
+              <select
+                id="kodeToko"
+                aria-label="Pilih Kode Toko"
+                className="w-full rounded-lg border px-3 py-2 text-sm"
+                value={kodeToko}
+                onChange={(e: any) => {
+                  const val = e.target.value;
+                  setKodeToko(val);
+                  const found = nooEntries.find((n) => n.kodeToko === val);
+                  if (found) {
+                    setNamaToko(found.namaToko || '');
+                    setAlamatToko(found.alamatToko || '');
+                    setTitikMaps(found.koordinat || '');
+                  }
                 }}
-              />
+              >
+                <option value="">-- Pilih Kode Toko --</option>
+                {nooEntries.map((n, i) => (
+                  <option key={i} value={n.kodeToko}>
+                    {n.kodeToko} - {n.namaToko}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="grid grid-cols-1 gap-3 mt-3">
+              <div>
+                <Label htmlFor="namaToko">Nama Toko</Label>
+                <Input type="text" id="namaToko" value={namaToko} onChange={(e: any) => setNamaToko(e.target.value)} />
+              </div>
+              <div>
+                <Label htmlFor="alamatToko">Alamat Toko</Label>
+                <Input type="text" id="alamatToko" value={alamatToko} onChange={(e: any) => setAlamatToko(e.target.value)} />
+              </div>
+              <div>
+                <Label htmlFor="titikMaps">Titik Koordinat Maps</Label>
+                <Input type="text" id="titikMaps" value={titikMaps} onChange={(e: any) => setTitikMaps(e.target.value)} />
+              </div>
+              <div>
+                <Label htmlFor="salesOrder">Sales Order</Label>
+                <Input type="text" id="salesOrder" value={salesOrder} onChange={(e: any) => setSalesOrder(e.target.value)} />
+              </div>
             </div>
           </ComponentCard>
         </div>
-        {/* Kolom Kanan */}
+
         <div className="space-y-6">
-          <ComponentCard title="Form 2">
-            <div>
-              <Label htmlFor="alamatLengkapOutlet">Alamat Lengkap Outlet</Label>
-              <Input type="text" id="alamatLengkapOutlet" value={alamatLengkapOutlet} onChange={(e: any) => setAlamatLengkapOutlet(e.target.value)} />
+          <ComponentCard title="Product">
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <Label htmlFor="p1">P1</Label>
+                <Input type="number" id="p1" value={p1 as any} onChange={(e: any) => setP1(e.target.value === '' ? 0 : Number(e.target.value))} />
+              </div>
+              <div>
+                <Label htmlFor="p2">P2</Label>
+                <Input type="number" id="p2" value={p2 as any} onChange={(e: any) => setP2(e.target.value === '' ? 0 : Number(e.target.value))} />
+              </div>
+              <div>
+                <Label htmlFor="p3">P3</Label>
+                <Input type="number" id="p3" value={p3 as any} onChange={(e: any) => setP3(e.target.value === '' ? 0 : Number(e.target.value))} />
+              </div>
+              <div>
+                <Label htmlFor="p4">P4</Label>
+                <Input type="number" id="p4" value={p4 as any} onChange={(e: any) => setP4(e.target.value === '' ? 0 : Number(e.target.value))} />
+              </div>
+              <div>
+                <Label htmlFor="p5">P5</Label>
+                <Input type="number" id="p5" value={p5 as any} onChange={(e: any) => setP5(e.target.value === '' ? 0 : Number(e.target.value))} />
+              </div>
             </div>
-            <div>
-              <Label htmlFor="kecamtanOutlet">Kecamatan Outlet</Label>
-              <Input type="text" id="kecamtanOutlet" value={kecamatanOutlet} onChange={(e: any) => setKecamatanOutlet(e.target.value)} />
+            <div className="mt-4">
+              <Label>Total</Label>
+              <div className="text-lg font-semibold">{total}</div>
             </div>
-            <div>
-              <Label htmlFor="titikMaps">Titik Lat Long Maps</Label>
-              <Input type="text" id="titikMaps" value={titikMaps} onChange={(e: any) => setTitikMaps(e.target.value)} />
+            <div className="mt-6 flex justify-end">
+              <Button size="md" variant="primary" onClick={handleSubmit}>
+                Kirim
+              </Button>
             </div>
           </ComponentCard>
-        </div>
-      </div>
-      <div className="space-y-6">
-        <ComponentCard title="Product">
-          <div className="flex justify-between">
-            <div>
-              <DatePicker
-                id="date-picker-2"
-                label="Tanggal Kirim Freezer"
-                placeholder="Select a date"
-                onChange={(_dates, currentDateString) => {
-                  setTanggalPengiriman(currentDateString || '');
-                }}
-              />
-            </div>
-            <div>
-              <Label htmlFor="keterangan">Keterangan (hasil Visit Outlet)</Label>
-              <Input type="text" id="keterangan-2" value={keterangan} onChange={(e: any) => setKeterangan(e.target.value)} />
-            </div>
-          </div>
-          <div className="flex items-center gap-5">
-            <div>
-              <div className="relative">
-                <div className="overflow-hidden">
-                  <img src={Halochoco} alt="Cover" className="w-50 border border-gray-200 rounded-xl dark:border-gray-800" />
-                </div>
-              </div>
-              <Label htmlFor="halococo">Halococo</Label>
-              <Input type="number" id="halococo" value={halococo} onChange={(e: any) => setHalococo(e.target.value === '' ? '' : Number(e.target.value))} />
-            </div>
-            <div>
-              <div className="relative">
-                <div className="overflow-hidden">
-                  <img src={JoycapCokelat} alt="Cover" className="w-50 border border-gray-200 rounded-xl dark:border-gray-800" />
-                </div>
-              </div>
-              <Label htmlFor="joycupCokelat">Joycup Cokelat</Label>
-              <Input type="number" id="joycupCokelat" value={joycupCokelat} onChange={(e: any) => setJoycupCokelat(e.target.value === '' ? '' : Number(e.target.value))} />
-            </div>
-            <div>
-              <div className="relative">
-                <div className="overflow-hidden">
-                  <img src={Chococone} alt="Cover" className="w-50 border border-gray-200 rounded-xl dark:border-gray-800" />
-                </div>
-              </div>
-              <Label htmlFor="chocoChone">23 Choco Cone</Label>
-              <Input type="number" id="chocoChone" value={chocoChone} onChange={(e: any) => setChocoChone(e.target.value === '' ? '' : Number(e.target.value))} />
-            </div>
-            <div>
-              <div className="relative">
-                <div className="overflow-hidden">
-                  <img src={FantasyAlmond} alt="Cover" className="w-50 border border-gray-200 rounded-xl dark:border-gray-800" />
-                </div>
-              </div>
-              <Label htmlFor="fantasyAlmond">fantasy Almond</Label>
-              <Input type="number" id="fantasyAlmond" value={fantasyAlmondQty} onChange={(e: any) => setFantasyAlmondQty(e.target.value === '' ? '' : Number(e.target.value))} />
-            </div>
-            <div>
-              <div className="relative">
-                <div className="overflow-hidden">
-                  <img src={FantasyCaramelMalt} alt="Cover" className="w-50 border border-gray-200 rounded-xl dark:border-gray-800" />
-                </div>
-              </div>
-              <Label htmlFor="fantasyCaramelMalt">Fantasy Caramel Malt</Label>
-              <Input type="number" id="fantasyCaramelMalt" value={fantasyCaramelMaltQty} onChange={(e: any) => setFantasyCaramelMaltQty(e.target.value === '' ? '' : Number(e.target.value))} />
-            </div>
-          </div>
-        </ComponentCard>
-        <div>
-          <Button size="md" variant="primary" onClick={handleSubmit}>
-            Kirim
-          </Button>
         </div>
       </div>
     </div>
