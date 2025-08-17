@@ -21,6 +21,7 @@ import FormRo from './pages/Forms/FormRo';
 import TableNoo from './pages/Tables/TableNoo';
 import TableRo from './pages/Tables/TableRo';
 import Tables from './pages/Tables/Tables';
+import Dashboard from './pages/Dashboard/dashboard';
 
 export default function App() {
   return (
@@ -30,7 +31,8 @@ export default function App() {
         <Routes>
           {/* Dashboard Layout */}
           <Route element={<AppLayout />}>
-            <Route index path="/" element={<Home />} />
+            <Route index path="/eco" element={<Home />} />
+            <Route index path="/" element={<Dashboard />} />
 
             {/* Others Page */}
             {/* <Route path="/profile" element={<UserProfiles />} /> */}

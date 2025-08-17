@@ -1,19 +1,8 @@
-import { useEffect, useState } from 'react';
 import PageMeta from '../../components/common/PageMeta';
 import TableToko from '../../components/tables/BasicTables/TableToko';
 import TableGudang from '../../components/tables/BasicTables/TableGudang';
 
 export default function Tables() {
-  const [isOpenToggle, setIsOpen] = useState(false);
-
-  function toggleDropdown() {
-    setIsOpen(!isOpenToggle);
-  }
-
-  function closeDropdown() {
-    setIsOpen(false);
-  }
-
   return (
     <>
       <PageMeta title="React.js Basic Tables Dashboard | TailAdmin - Next.js Admin Dashboard Template" description="This is React.js Basic Tables Dashboard page for TailAdmin - React.js Tailwind CSS Admin Dashboard Template" />
