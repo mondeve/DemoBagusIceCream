@@ -38,11 +38,11 @@ export default function FormRo() {
   const [salesOrder, setSalesOrder] = useState('');
   const [tanggalOrder, setTanggalOrder] = useState(() => new Date().toISOString().slice(0, 10));
 
-  const [p1, setP1] = useState<number | ''>(0);
-  const [p2, setP2] = useState<number | ''>(0);
-  const [p3, setP3] = useState<number | ''>(0);
-  const [p4, setP4] = useState<number | ''>(0);
-  const [p5, setP5] = useState<number | ''>(0);
+  const [p1, setP1] = useState<number | ''>();
+  const [p2, setP2] = useState<number | ''>();
+  const [p3, setP3] = useState<number | ''>();
+  const [p4, setP4] = useState<number | ''>();
+  const [p5, setP5] = useState<number | ''>();
 
   useEffect(() => {
     const loadNoo = () => {
@@ -216,26 +216,50 @@ export default function FormRo() {
 
         <div className="space-y-6">
           <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white px-5 p-8 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6 sm:pt-6">
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <Label htmlFor="p1">P1</Label>
-                <Input type="number" id="p1" value={p1 as any} onChange={(e: any) => setP1(e.target.value === '' ? 0 : Number(e.target.value))} />
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {/* P1 */}
+              <div className="flex items-center gap-3">
+                <img src="/images/product/halochoco.png" alt="P1" className="w-32 h-32 object-cover rounded" />
+                <div className="flex-1">
+                  <Label htmlFor="p1">P1</Label>
+                  <Input type="number" id="p1" value={p1 as any} onChange={(e: any) => setP1(e.target.value === '' ? 0 : Number(e.target.value))} />
+                </div>
               </div>
-              <div>
-                <Label htmlFor="p2">P2</Label>
-                <Input type="number" id="p2" value={p2 as any} onChange={(e: any) => setP2(e.target.value === '' ? 0 : Number(e.target.value))} />
+
+              {/* P2 */}
+              <div className="flex items-center gap-3">
+                <img src="/images/product/jaycapcokelat.png" alt="P2" className="w-32 h-32 object-cover rounded" />
+                <div className="flex-1">
+                  <Label htmlFor="p2">P2</Label>
+                  <Input type="number" id="p2" value={p2 as any} onChange={(e: any) => setP2(e.target.value === '' ? 0 : Number(e.target.value))} />
+                </div>
               </div>
-              <div>
-                <Label htmlFor="p3">P3</Label>
-                <Input type="number" id="p3" value={p3 as any} onChange={(e: any) => setP3(e.target.value === '' ? 0 : Number(e.target.value))} />
+
+              {/* P3 */}
+              <div className="flex items-center gap-3">
+                <img src="/images/product/23chococone.png" alt="P3" className="w-32 h-32 object-cover rounded" />
+                <div className="flex-1">
+                  <Label htmlFor="p3">P3</Label>
+                  <Input type="number" id="p3" value={p3 as any} onChange={(e: any) => setP3(e.target.value === '' ? 0 : Number(e.target.value))} />
+                </div>
               </div>
-              <div>
-                <Label htmlFor="p4">P4</Label>
-                <Input type="number" id="p4" value={p4 as any} onChange={(e: any) => setP4(e.target.value === '' ? 0 : Number(e.target.value))} />
+
+              {/* P4 */}
+              <div className="flex items-center gap-3">
+                <img src="/images/product/piscokcrispy.png" alt="P4" className="w-32 h-32 object-cover rounded" />
+                <div className="flex-1">
+                  <Label htmlFor="p4">P4</Label>
+                  <Input type="number" id="p4" value={p4 as any} onChange={(e: any) => setP4(e.target.value === '' ? 0 : Number(e.target.value))} />
+                </div>
               </div>
-              <div>
-                <Label htmlFor="p5">P5</Label>
-                <Input type="number" id="p5" value={p5 as any} onChange={(e: any) => setP5(e.target.value === '' ? 0 : Number(e.target.value))} />
+
+              {/* P5 */}
+              <div className="flex items-center gap-3">
+                <img src="/images/product/fantasyalmond.png" alt="P5" className="w-32 h-32  object-cover rounded" />
+                <div className="flex-1">
+                  <Label htmlFor="p5">P5</Label>
+                  <Input type="number" id="p5" value={p5 as any} onChange={(e: any) => setP5(e.target.value === '' ? 0 : Number(e.target.value))} />
+                </div>
               </div>
             </div>
             {/* <div className="mt-4">
