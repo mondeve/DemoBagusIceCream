@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Seed LocalStorage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 1.25rem
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Seeder</h1>
+    <p>Append dummy NOO / RO 10 entries into localStorage without overwriting existing data.</p>
+    <button id="append-noo10">Append NOO 10</button>
+    <button id="append-ro10">Append RO 10</button>
+    <button id="clear">Clear noo_entries</button>
+    <button id="clear-ro">Clear ro_entries</button>
+    <pre id="status">Idle</pre>
+    <script>
+        async function loadJson(path) { const r = await fetch(path); return r.json(); }
+        document.getElementById('append-noo10').addEventListener('click', async () => {
+            try {
+                const data = await loadJson('/src/data/noo_dummy_10.json');
+                const raw = localStorage.getItem('noo_entries') || '[]';
+                const existing = JSON.parse(raw) || [];
+                const existingKode = new Set(existing.map(e => e.kodeToko));
+                const appended = data.map(d => {
+                    const copy = { ...d };
+                    if (existingKode.has(copy.kodeToko)) copy.kodeToko = `${copy.kodeToko}-D${String(Date.now()).slice(-4)}`;
+                    copy.createdAt = new Date().toISOString();
+                    return copy;
+                });
+                const combined = existing.concat(appended);
+                localStorage.setItem('noo_entries', JSON.stringify(combined));
+                window.dispatchEvent(new Event('noo_entries_updated'));
+                document.getElementById('status').textContent = 'Appended ' + appended.length + ' entries';
+            } catch (err) { document.getElementById('status').textContent = 'Error: ' + err }
+        });
+        document.getElementById('append-ro10').addEventListener('click', async () => {
+            try {
+                const data = await loadJson('/src/data/ro_dummy_10.json');
+                const raw = localStorage.getItem('ro_entries') || '[]';
+                const existing = JSON.parse(raw) || [];
+                const existingKode = new Set(existing.map(e => e.kodeToko));
+                const appended = data.map(d => {
+                    const copy = { ...d };
+                    if (existingKode.has(copy.kodeToko)) copy.kodeToko = `${copy.kodeToko}-D${String(Date.now()).slice(-4)}`;
+                    copy.createdAt = new Date().toISOString();
+                    return copy;
+                });
+                const combined = existing.concat(appended);
+                localStorage.setItem('ro_entries', JSON.stringify(combined));
+                window.dispatchEvent(new Event('ro_entries_updated'));
+                document.getElementById('status').textContent = 'Appended ' + appended.length + ' RO entries';
+            } catch (err) { document.getElementById('status').textContent = 'Error: ' + err }
+        });
+        document.getElementById('clear').addEventListener('click', () => {
+            localStorage.removeItem('noo_entries');
+            window.dispatchEvent(new Event('noo_entries_updated'));
+            document.getElementById('status').textContent = 'Cleared noo_entries';
+        });
+        document.getElementById('clear-ro').addEventListener('click', () => {
+            localStorage.removeItem('ro_entries');
+            window.dispatchEvent(new Event('ro_entries_updated'));
+            document.getElementById('status').textContent = 'Cleared ro_entries';
+        });
+    </script>
+</body>
+
+</html>

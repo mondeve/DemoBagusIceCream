@@ -1,19 +1,19 @@
-import { useEffect, useState } from 'react';
-import { Table, TableBody, TableCell, TableHeader, TableRow } from '../../ui/table';
-import { Dropdown } from '../../ui/dropdown/Dropdown';
-import { DropdownItem } from '../../ui/dropdown/DropdownItem';
-import { MoreDotIcon } from '../../../icons';
+// import { useEffect, useState } from 'react';
+import { Table,  TableCell, TableHeader, TableRow } from '../../ui/table';
+// import { Dropdown } from '../../ui/dropdown/Dropdown';
+// import { DropdownItem } from '../../ui/dropdown/DropdownItem';
+// import { MoreDotIcon } from '../../../icons';
 
 export default function TableGudang() {
-  const [isOpenToggle, setIsOpen] = useState(false);
+//   const [isOpenToggle, setIsOpen] = useState(false);
 
-  function toggleDropdown() {
-    setIsOpen(!isOpenToggle);
-  }
+//   function toggleDropdown() {
+//     setIsOpen(!isOpenToggle);
+//   }
 
-  function closeDropdown() {
-    setIsOpen(false);
-  }
+//   function closeDropdown() {
+//     setIsOpen(false);
+//   }
 
   return (
     <>
@@ -21,14 +21,14 @@ export default function TableGudang() {
         <div className="flex items-center justify-between pb-4">
           <h3 className="text-lg font-semibold text-gray-800 dark:text-white/90">Tabel Gudang</h3>
           <div className="relative inline-block">
-            <button aria-label="More actions" className="dropdown-toggle" onClick={toggleDropdown}>
+            {/* <button aria-label="More actions" className="dropdown-toggle" onClick={toggleDropdown}>
               <MoreDotIcon className="text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 size-6" />
             </button>
             <Dropdown isOpen={isOpenToggle} onClose={closeDropdown} className="w-40 p-2">
               <DropdownItem onClick={() => {}} className="flex w-full font-normal text-left text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300">
                 wait
               </DropdownItem>
-            </Dropdown>
+            </Dropdown> */}
           </div>
         </div>
         <div className="max-w-[1000px] overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">

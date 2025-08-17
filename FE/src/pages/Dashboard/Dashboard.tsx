@@ -1,6 +1,6 @@
 import Metrics from '../../components/ecommerce/Metrics';
 import Penjualan from '../../components/ecommerce/Penjualan';
-import StatisticsChart from '../../components/ecommerce/StatisticsChart';
+// import StatisticsChart from '../../components/ecommerce/StatisticsChart';
 import PageMeta from '../../components/common/PageMeta';
 
 export default function Dashboard() {

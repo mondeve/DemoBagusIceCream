@@ -15,13 +15,13 @@ import Calendar from './pages/Calendar';
 import Blank from './pages/Blank';
 import AppLayout from './layout/AppLayout';
 import { ScrollToTop } from './components/common/ScrollToTop';
-import Home from './pages/Dashboard/Home';
+// import Home from './pages/Dashboard/Home';
 import FormNoo from './pages/Forms/FormNoo';
 import FormRo from './pages/Forms/FormRo';
 import TableNoo from './pages/Tables/TableNoo';
 import TableRo from './pages/Tables/TableRo';
 import Tables from './pages/Tables/Tables';
-import Dashboard from './pages/Dashboard/dashboard';
+import Dashboard from './pages/Dashboard/Dashboard';
 
 export default function App() {
   return (
@@ -31,7 +31,7 @@ export default function App() {
         <Routes>
           {/* Dashboard Layout */}
           <Route element={<AppLayout />}>
-            <Route index path="/eco" element={<Home />} />
+            {/* <Route index path="/eco" element={<Home />} /> */}
             <Route index path="/" element={<Dashboard />} />
 
             {/* Others Page */}

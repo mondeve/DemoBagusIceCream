@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PageBreadcrumb from '../../components/common/PageBreadCrumb';
 import PageMeta from '../../components/common/PageMeta';
-import ComponentCard from '../../components/common/ComponentCard.tsx';
+// import ComponentCard from '../../components/common/ComponentCard.tsx';
 import Label from '../../components/form/Label.tsx';
 import Input from '../../components/form/input/InputField.tsx';
 import Button from '../../components/ui/button/Button';

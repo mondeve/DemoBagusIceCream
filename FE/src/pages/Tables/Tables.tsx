@@ -1,6 +1,6 @@
 import PageMeta from '../../components/common/PageMeta';
 import TableToko from '../../components/tables/BasicTables/TableToko';
-import TableGudang from '../../components/tables/BasicTables/TableGudang';
+// import TableGudang from '../../components/tables/BasicTables/TableGudang';
 
 export default function Tables() {
   return (
@@ -10,9 +10,9 @@ export default function Tables() {
         <div className="col-span-12">
           <TableToko />
         </div>
-        <div className="col-span-12">
+        {/* <div className="col-span-12">
           <TableGudang />
-        </div>
+        </div> */}
       </div>
     </>
   );
