@@ -20,6 +20,7 @@ import FormNoo from './pages/Forms/FormNoo';
 import FormRo from './pages/Forms/FormRo';
 import TableNoo from './pages/Tables/TableNoo';
 import TableRo from './pages/Tables/TableRo';
+import Tables from './pages/Tables/Tables';
 
 export default function App() {
   return (
@@ -45,6 +46,7 @@ export default function App() {
             {/* <Route path="/basic-tables" element={<BasicTables />} />
             <Route path="/freezer" element={<Freezer />} /> */}
             <Route path="/table-noo" element={<TableNoo />} />
+            <Route path="/tables" element={<Tables />} />
             <Route path="/table-ro" element={<TableRo />} />
 
             {/* Ui Elements */}

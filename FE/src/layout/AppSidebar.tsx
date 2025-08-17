@@ -49,6 +49,7 @@ const navItems: NavItem[] = [
     subItems: [
       // { name: 'Basic Tables', path: '/basic-tables', pro: false },
       // { name: 'Freezer', path: '/freezer', pro: false },
+      { name: 'All Table', path: '/tables', pro: false },
       { name: 'Table Penjualan (PO)', path: '/table-noo', pro: false },
       { name: 'Table Penjualan Product', path: '/table-ro', pro: false },
     ],

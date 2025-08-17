@@ -114,16 +114,11 @@ export default function TableNoo() {
           return new Date(0);
         };
 
-        const isSameDay = (a: Date, b: Date) => a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
-        const today = new Date();
-
+        // sort entries by newest input date first (createdAt fallback to tanggal)
         normalized.sort((a, b) => {
           const da = toDate(a);
           const db = toDate(b);
-          const aToday = isSameDay(da, today) ? 1 : 0;
-          const bToday = isSameDay(db, today) ? 1 : 0;
-          if (aToday !== bToday) return bToday - aToday; // today first
-          return db.getTime() - da.getTime(); // newest first
+          return db.getTime() - da.getTime();
         });
 
         setEntries(normalized);
@@ -208,7 +203,6 @@ export default function TableNoo() {
           statusFreezer: shipStatusFreezer || 'belum terkirim',
           driverFreezer: shipDriver || '',
           kodeToko: shipKodeToko,
-          createdAt: new Date().toISOString(),
         };
 
         if (idx >= 0) {
@@ -235,7 +229,6 @@ export default function TableNoo() {
           statusIceCream: shipStatus || 'belum terkirim',
           driverIceCream: shipDriver || '',
           kodeToko: shipKodeToko,
-          createdAt: new Date().toISOString(),
         };
 
         if (idx >= 0) {
@@ -347,7 +340,7 @@ export default function TableNoo() {
   return (
     <>
       <PageMeta title="React.js Basic Tables Dashboard | TailAdmin - Next.js Admin Dashboard Template" description="This is React.js Basic Tables Dashboard page for TailAdmin - React.js Tailwind CSS Admin Dashboard Template" />
-      <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white px-5 p-8 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6 sm:pt-6">
+      <div className=" max-w-full overflow-hidden rounded-2xl border border-gray-200 bg-white px-5 p-8 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6 sm:pt-6">
         <div className="flex items-center justify-between pb-4">
           <h3 className="text-lg font-semibold text-gray-800 dark:text-white/90">Tabel Penjualan (PO)</h3>
           <div className="relative inline-block">
@@ -394,51 +387,8 @@ export default function TableNoo() {
             </Dropdown>
           </div>
         </div>
-
-        {/* <div className="px-6 pb-4 flex gap-2">
-          <Button
-            size="sm"
-            variant="primary"
-            onClick={() => {
-              setShipType('freezer');
-              openShipModal();
-            }}
-          >
-            Pengiriman Freezer
-          </Button>
-          <Button
-            size="sm"
-            variant="outline"
-            onClick={() => {
-              setTerType('freezer');
-              openTerkirimModal();
-            }}
-          >
-            Freezer Terkirim
-          </Button>
-          <Button
-            size="sm"
-            variant="primary"
-            onClick={() => {
-              setShipType('icecream');
-              openShipModal();
-            }}
-          >
-            Pengiriman Ice Cream
-          </Button>
-          <Button
-            size="sm"
-            variant="outline"
-            onClick={() => {
-              setTerType('icecream');
-              openTerkirimModal();
-            }}
-          >
-            Ice Cream Terkirim
-          </Button>
-        </div> */}
-        <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
-          <div className="max-w-full overflow-x-auto">
+        <div className="max-w-[1000px] overflow-hidden rounded-2xl border border-gray-200 bg-white px-5 p-8 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6 sm:pt-6">
+          <div className="overflow-auto overflow-x-auto custom-scrollbar">
             <Table>
               {/* Table Header */}
               <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
